@@ -232,6 +232,7 @@ body::before {
 .terminal-section {
     display: none;
     animation: fadeIn 0.5s ease-in;
+    margin-bottom: 40px; /* Add spacing between sections when all are visible */
 }
 
 .terminal-section.active {
@@ -314,6 +315,13 @@ body::before {
 
 .blink {
     animation: blink-slow 1.5s infinite;
+    transition: all 0.3s ease;
+}
+
+.blink:hover {
+    color: var(--color-secondary);
+    transform: scale(1.05);
+    text-shadow: 0 0 10px rgba(255, 0, 64, 0.8);
 }
 
 @keyframes blink-slow {

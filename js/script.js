@@ -249,6 +249,166 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', setupMobileMenu);
     
     // ═══════════════════════════════════════════════════════════════
+    // AUTO-SCROLL THROUGH SECTIONS (START BUTTON)
+    // ═══════════════════════════════════════════════════════════════
+    const startButton = document.getElementById('start-button');
+    let autoScrollActive = false;
+    let currentSectionIndex = 0;
+    let continueButton = null;
+    
+    if (startButton) {
+        startButton.addEventListener('click', function() {
+            if (!autoScrollActive) {
+                autoScrollActive = true;
+                this.style.display = 'none'; // Hide the button after click
+                initAutoScrollThroughSections();
+            }
+        });
+        
+        // Also trigger on Enter key when focused
+        startButton.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !autoScrollActive) {
+                autoScrollActive = true;
+                this.style.display = 'none';
+                initAutoScrollThroughSections();
+            }
+        });
+    }
+    
+    function initAutoScrollThroughSections() {
+        const sectionOrder = ['#home', '#about', '#projects', '#skills', '#contact'];
+        currentSectionIndex = 0;
+        
+        // Show all sections expanded mode
+        sections.forEach(section => {
+            section.style.display = 'block';
+            section.classList.add('active');
+        });
+        
+        // Create continue button
+        createContinueButton();
+        
+        // Start with first section
+        scrollToSection(sectionOrder[currentSectionIndex]);
+    }
+    
+    function createContinueButton() {
+        // Remove existing button if any
+        if (continueButton) {
+            continueButton.remove();
+        }
+        
+        // Create new continue button
+        continueButton = document.createElement('div');
+        continueButton.id = 'continue-button';
+        continueButton.innerHTML = '<span class="blink">&gt;&gt; CONTINUE [PRESS ENTER OR CLICK]</span>';
+        continueButton.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 15px 25px;
+            background: rgba(0, 255, 65, 0.1);
+            border: 3px solid #00ff41;
+            color: #00ff41;
+            font-family: 'VT323', monospace;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 10000;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+            transition: all 0.3s ease;
+        `;
+        
+        document.body.appendChild(continueButton);
+        
+        // Hover effect
+        continueButton.addEventListener('mouseenter', function() {
+            this.style.background = 'rgba(255, 0, 64, 0.2)';
+            this.style.borderColor = '#ff0040';
+            this.style.color = '#ff0040';
+            this.style.boxShadow = '0 0 30px rgba(255, 0, 64, 0.7)';
+            this.style.transform = 'scale(1.05)';
+        });
+        
+        continueButton.addEventListener('mouseleave', function() {
+            this.style.background = 'rgba(0, 255, 65, 0.1)';
+            this.style.borderColor = '#00ff41';
+            this.style.color = '#00ff41';
+            this.style.boxShadow = '0 0 20px rgba(0, 255, 65, 0.5)';
+            this.style.transform = 'scale(1)';
+        });
+        
+        // Click handler
+        continueButton.addEventListener('click', goToNextSection);
+        
+        // Enter key handler
+        document.addEventListener('keydown', handleContinueKeyPress);
+    }
+    
+    function handleContinueKeyPress(e) {
+        if (e.key === 'Enter' && autoScrollActive && continueButton) {
+            goToNextSection();
+        }
+    }
+    
+    function goToNextSection() {
+        const sectionOrder = ['#home', '#about', '#projects', '#skills', '#contact'];
+        currentSectionIndex++;
+        
+        if (currentSectionIndex < sectionOrder.length) {
+            scrollToSection(sectionOrder[currentSectionIndex]);
+        } else {
+            // Tour complete
+            completeTour();
+        }
+    }
+    
+    function scrollToSection(sectionId) {
+        const targetSection = document.querySelector(sectionId);
+        
+        if (targetSection) {
+            // Scroll to the section
+            targetSection.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+            
+            // Update navigation active state
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === sectionId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            
+            // Trigger skill bar animation when reaching skills section
+            if (sectionId === '#skills') {
+                setTimeout(() => animateSkillBars(), 500);
+            }
+            
+            console.log(`[VIEWING] Section: ${sectionId.replace('#', '').toUpperCase()}`);
+        }
+    }
+    
+    function completeTour() {
+        console.log('[TOUR COMPLETE] All sections viewed!');
+        
+        // Remove continue button
+        if (continueButton) {
+            continueButton.remove();
+            continueButton = null;
+        }
+        
+        // Remove keydown listener
+        document.removeEventListener('keydown', handleContinueKeyPress);
+        
+        autoScrollActive = false;
+        
+        // Show completion message in console
+        console.log('%c🎮 PORTFOLIO TOUR FINISHED! 🎮', 'color: #00ff41; font-size: 16px; font-weight: bold;');
+    }
+    
+    // ═══════════════════════════════════════════════════════════════
     // CONSOLE WELCOME MESSAGE
     // ═══════════════════════════════════════════════════════════════
     console.log('%c🎮 Welcome, Game Developer! 🎮', 'color: #00ff41; font-size: 16px; font-weight: bold;');
