@@ -439,6 +439,18 @@ body::before {
     );
 }
 
+.project-video {
+    width: 100%;
+    margin: 15px 0;
+}
+
+.project-video video {
+    width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+    background-color: #000;
+}
+
 .project-links {
     display: flex;
     gap: 15px;
