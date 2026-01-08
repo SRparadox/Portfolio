@@ -279,10 +279,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const sectionOrder = ['#home', '#about', '#projects', '#skills', '#contact'];
         currentSectionIndex = 0;
         
-        // Show all sections expanded mode
+        // Hide all sections first
         sections.forEach(section => {
-            section.style.display = 'block';
-            section.classList.add('active');
+            section.style.display = 'none';
+            section.classList.remove('active');
         });
         
         // Create continue button
@@ -366,6 +366,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const targetSection = document.querySelector(sectionId);
         
         if (targetSection) {
+            // Show only the current section
+            sections.forEach(section => {
+                if (section.id === sectionId.replace('#', '')) {
+                    section.style.display = 'block';
+                    section.classList.add('active');
+                } else {
+                    section.style.display = 'none';
+                    section.classList.remove('active');
+                }
+            });
+            
             // Scroll to the section
             targetSection.scrollIntoView({ 
                 behavior: 'smooth', 
