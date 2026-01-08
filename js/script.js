@@ -85,6 +85,12 @@ document.addEventListener('DOMContentLoaded', function() {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
+            
+            // If auto-scroll is active, cancel it
+            if (autoScrollActive) {
+                cancelAutoScroll();
+            }
+            
             showSection(targetId);
             
             // Add active state to nav items
@@ -279,12 +285,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const sectionOrder = ['#home', '#about', '#projects', '#skills', '#contact'];
         currentSectionIndex = 0;
         
-        // Hide all sections first
-        sections.forEach(section => {
-            section.style.display = 'none';
-            section.classList.remove('active');
-        });
-        
         // Create continue button
         createContinueButton();
         
@@ -366,13 +366,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const targetSection = document.querySelector(sectionId);
         
         if (targetSection) {
-            // Show only the current section
+            // Show only the current section during auto-scroll
             sections.forEach(section => {
                 if (section.id === sectionId.replace('#', '')) {
-                    section.style.display = 'block';
                     section.classList.add('active');
                 } else {
-                    section.style.display = 'none';
                     section.classList.remove('active');
                 }
             });
@@ -417,6 +415,23 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Show completion message in console
         console.log('%c🎮 PORTFOLIO TOUR FINISHED! 🎮', 'color: #00ff41; font-size: 16px; font-weight: bold;');
+        console.log('%cYou can now use the navigation menu freely!', 'color: #00ff41; font-size: 12px;');
+    }
+    
+    function cancelAutoScroll() {
+        console.log('[AUTO-SCROLL] Cancelled by user navigation');
+        
+        // Remove continue button
+        if (continueButton) {
+            continueButton.remove();
+            continueButton = null;
+        }
+        
+        // Remove keydown listener
+        document.removeEventListener('keydown', handleContinueKeyPress);
+        
+        autoScrollActive = false;
+        currentSectionIndex = 0;
     }
     
     // ═══════════════════════════════════════════════════════════════
