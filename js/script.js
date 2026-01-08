@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════
-// PIRATE RADIO - Portfolio JavaScript
+// PARADOX GIRL - Portfolio JavaScript
 // Interactive terminal effects and navigation
 // ═══════════════════════════════════════════════════════════════════
 
@@ -12,10 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const cursor = document.querySelector('.cursor');
     
     const textArray = [
-        'GAME DESIGNER | LEVEL ARCHITECT | CREATIVE TECHNOLOGIST',
-        'CRAFTING INTERACTIVE EXPERIENCES',
-        'BUILDING WORLDS, ONE PIXEL AT A TIME',
-        'GAME MECHANICS | SYSTEMS | NARRATIVE DESIGN'
+        'GAME DESIGNER | WRITER | PRODUCTION LEAD',
+        'NARRATIVE DESIGN | ACCESSIBILITY | TEAM LEADERSHIP',
+        'CRAFTING IMMERSIVE & INCLUSIVE EXPERIENCES',
+        'BILINGUAL | VOICE ACTRESS | QA SPECIALIST'
     ];
     
     const typingDelay = 100;
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ═══════════════════════════════════════════════════════════════
     function bootSequence() {
         console.log('%c╔════════════════════════════════════════╗', 'color: #00ff41');
-        console.log('%c║   PIRATE RADIO PORTFOLIO SYSTEM       ║', 'color: #00ff41');
+        console.log('%c║   PARADOX GIRL PORTFOLIO SYSTEM       ║', 'color: #00ff41');
         console.log('%c║   Version 1.0.0                       ║', 'color: #00ff41');
         console.log('%c╚════════════════════════════════════════╝', 'color: #00ff41');
         console.log('%c[OK] System initialized', 'color: #00ff41');

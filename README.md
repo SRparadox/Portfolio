@@ -1,4 +1,4 @@
-# 🎮 PIRATE RADIO - Game Designer Portfolio
+# 🎮 PARADOX GIRL - Game Designer Portfolio
 
 A retro-styled terminal/ASCII aesthetic portfolio website for game designers, built with pure HTML, CSS, and JavaScript. Features a classic CRT monitor look with scanline effects, green and red terminal colors, and smooth animations.
 
